@@ -15,7 +15,7 @@ public class ExternalReferenceEventHandler {
   @HandleBeforeSave
   @HandleBeforeCreate
   private void generateExternalReference(ExternalReference er) {
-    logger.info("Saving ExternalReference to {}", er.getInternalReference());
+    logger.debug("Saving ExternalReference to {}", er.getInternalReference());
     String erValue = er.getValues().size() > 0 ? String.join("_", er.getValues().values()) : "";
     er.setExternalReference(erValue);
   }

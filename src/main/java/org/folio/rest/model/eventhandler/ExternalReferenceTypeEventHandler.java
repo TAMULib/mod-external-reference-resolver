@@ -21,7 +21,7 @@ public class ExternalReferenceTypeEventHandler {
 
   @HandleAfterSave
   private void updateExternalReferences(ExternalReferenceType ert) {
-    logger.info("Saving ExternalReferenceType: {}", ert.getName());
+    logger.debug("Saving ExternalReferenceType: {}", ert.getName());
     List<ExternalReference> ers = erRepo.findAllByType(ert);
     ers.forEach(er->{
       String erValue = er.getValues().size() > 0 ? String.join("_", er.getValues().values()) : "";
