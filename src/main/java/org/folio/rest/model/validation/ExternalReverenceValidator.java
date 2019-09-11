@@ -1,7 +1,9 @@
 package org.folio.rest.model.validation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.validation.ConstraintValidator;
@@ -11,37 +13,32 @@ import org.folio.rest.model.ExternalReference;
 
 public class ExternalReverenceValidator implements ConstraintValidator<ValidExternalReference, ExternalReference> {
 
-  private static final String MESSAGE_TEMPLATE = "\n%s: %s";
-
-  private static final StringBuilder sb = new StringBuilder();
+  private static final String MESSAGE_TEMPLATE = "%s: %s";
 
   @Override
   public boolean isValid(ExternalReference externalReference, ConstraintValidatorContext constraintContext) {
-    Boolean isValid = true; 
-    isValid = validateValues(externalReference);
-    if(!isValid) {
-      buildMessageTemplate(constraintContext);
-    }
-    return isValid;
+    Map<String,String> violations = new HashMap<String, String>();
+    validateValues(externalReference, violations);
+    buildMessageTemplate(constraintContext, violations);
+    return violations.isEmpty();
   }
 
-  private boolean validateValues(ExternalReference externalReference) {
+  private void validateValues(ExternalReference externalReference, Map<String,String> violations) {
     List<String> allowedKeys = externalReference.getType().getDistinctives();
     List<String> usedKeys = new ArrayList<String>(externalReference.getValues().keySet());
     usedKeys.removeAll(allowedKeys);
-    addViolationMessage("Unrecognized Keys", usedKeys.stream().collect(Collectors.joining(",")));
-    return usedKeys.isEmpty();
+    if(!usedKeys.isEmpty()) {
+      violations.put("values", String.format(MESSAGE_TEMPLATE, "Unrecognized Keys", usedKeys.stream().collect(Collectors.joining(","))));
+    }
   }
 
-  private void addViolationMessage(String violation, String message) {
-    sb.append(String.format(MESSAGE_TEMPLATE, violation, message));
-  }
-
-  private void buildMessageTemplate(ConstraintValidatorContext constraintContext) {
-    String message = constraintContext.getDefaultConstraintMessageTemplate();
-    constraintContext.disableDefaultConstraintViolation();
-    constraintContext.buildConstraintViolationWithTemplate(String.format(message, sb.toString())).addConstraintViolation();
-    sb.setLength(0);
+  private void buildMessageTemplate(ConstraintValidatorContext constraintContext, Map<String,String> violations) {
+    violations.forEach((node,violation)->{
+      constraintContext.buildConstraintViolationWithTemplate(violation)
+        .addPropertyNode(node)
+        .addConstraintViolation();
+    });
+    //constraintContext.disableDefaultConstraintViolation();
   };
 
 }

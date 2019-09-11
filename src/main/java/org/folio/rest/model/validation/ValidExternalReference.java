@@ -16,7 +16,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = ExternalReverenceValidator.class)
 public @interface ValidExternalReference {
 
-    String message() default "Invalid External Reference: %s";
+    String message() default "ExternalReference";
 
     Class<?>[] groups() default {};
 
