@@ -5,36 +5,49 @@ import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
-
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyColumn;
 import javax.validation.constraints.NotNull;
 
-import org.folio.rest.domain.model.AbstractBaseEntity;
-import org.folio.rest.model.listener.ExternalReferenceListener;
-import org.springframework.data.annotation.Version;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import org.folio.rest.model.validation.ValidExternalReference;
 
 @Entity
-@EntityListeners(ExternalReferenceListener.class)
-public class ExternalReference extends AbstractBaseEntity {
+@ValidExternalReference
+public class ExternalReference {
 
+  @Id
   @NotNull
-  @Column(unique = true)
+  @Column(unique = true, nullable = false)
   private String internalReference;
 
-  @NotNull
   @Column(unique = true)
+  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+  @NotNull
   private String externalReference;
 
   @ElementCollection
-  @Version
-  private Map<String,String> distinctives;
+  @MapKeyColumn(name="distinctive")
+  @Column(name="value")
+  private Map<String,String> values;
 
   @NotNull
-  private String type;
+  @ManyToOne
+  private ExternalReferenceType type;
 
   public ExternalReference() {
-    distinctives = new HashMap<String,String>();
+    values = new HashMap<String,String>();
+  }
+
+  public ExternalReferenceType getType() {
+    return type;
+  }
+
+  public void setType(ExternalReferenceType type) {
+    this.type = type;
   }
 
   public String getInternalReference() {
@@ -53,20 +66,12 @@ public class ExternalReference extends AbstractBaseEntity {
     this.externalReference = externalReference;
   }
 
-  public String getType() {
-    return type;
+  public Map<String, String> getValues() {
+    return values;
   }
 
-  public void setType(String type) {
-    this.type = type;
+  public void setValues(Map<String, String> values) {
+    this.values = values;
   }
-
-public Map<String, String> getDistinctives() {
-	return distinctives;
-}
-
-public void setDistinctives(Map<String, String> distinctives) {
-	this.distinctives = distinctives;
-}
 
 }

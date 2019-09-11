@@ -4,24 +4,39 @@
   "type" : "object",
   "additionalProperties" : false,
   "properties" : {
-    "id" : {
-      "type" : "string"
-    },
     "internalReference" : {
       "type" : "string"
     },
     "externalReference" : {
       "type" : "string"
     },
-    "distinctives" : {
+    "values" : {
       "type" : "object",
       "additionalProperties" : {
         "type" : "string"
       }
     },
     "type" : {
-      "type" : "string"
+      "$ref" : "#/definitions/ExternalReferenceType"
     }
   },
-  "required" : [ "internalReference", "externalReference", "type" ]
+  "required" : [ "internalReference", "externalReference", "type" ],
+  "definitions" : {
+    "ExternalReferenceType" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "distinctives" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      },
+      "required" : [ "name" ]
+    }
+  }
 }
