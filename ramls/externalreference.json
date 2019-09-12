@@ -1,0 +1,42 @@
+{
+  "$schema" : "http://json-schema.org/draft-04/schema#",
+  "title" : "External Reference",
+  "type" : "object",
+  "additionalProperties" : false,
+  "properties" : {
+    "internalReference" : {
+      "type" : "string"
+    },
+    "externalReference" : {
+      "type" : "string"
+    },
+    "values" : {
+      "type" : "object",
+      "additionalProperties" : {
+        "type" : "string"
+      }
+    },
+    "type" : {
+      "$ref" : "#/definitions/ExternalReferenceType"
+    }
+  },
+  "required" : [ "internalReference", "externalReference", "type" ],
+  "definitions" : {
+    "ExternalReferenceType" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "distinctives" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      },
+      "required" : [ "name" ]
+    }
+  }
+}
