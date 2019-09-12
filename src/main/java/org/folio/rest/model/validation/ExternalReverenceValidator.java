@@ -24,8 +24,8 @@ public class ExternalReverenceValidator implements ConstraintValidator<ValidExte
   }
 
   private void validateValues(ExternalReference externalReference, Map<String,String> violations) {
-    List<String> allowedKeys = externalReference.getType().getDistinctives();
-    List<String> usedKeys = new ArrayList<String>(externalReference.getValues().keySet());
+    List<String> allowedKeys = externalReference.getType().getAllowedKeys();
+    List<String> usedKeys = externalReference.getDistinctives().stream().map(d -> d.getKey()).collect(Collectors.toList());
     usedKeys.removeAll(allowedKeys);
     if(!usedKeys.isEmpty()) {
       violations.put("values", String.format(MESSAGE_TEMPLATE, "Unrecognized Keys", usedKeys.stream().collect(Collectors.joining(","))));
@@ -38,7 +38,7 @@ public class ExternalReverenceValidator implements ConstraintValidator<ValidExte
         .addPropertyNode(node)
         .addConstraintViolation();
     });
-    //constraintContext.disableDefaultConstraintViolation();
+    constraintContext.disableDefaultConstraintViolation();
   };
 
 }

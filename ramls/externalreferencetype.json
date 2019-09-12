@@ -4,10 +4,13 @@
   "type" : "object",
   "additionalProperties" : false,
   "properties" : {
+    "id" : {
+      "type" : "string"
+    },
     "name" : {
       "type" : "string"
     },
-    "distinctives" : {
+    "allowedKeys" : {
       "type" : "array",
       "items" : {
         "type" : "string"

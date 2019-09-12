@@ -1,7 +1,6 @@
 package org.folio.rest.config;
 
 import org.folio.rest.model.eventhandler.ExternalReferenceEventHandler;
-import org.folio.rest.model.eventhandler.ExternalReferenceTypeEventHandler;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -19,11 +18,6 @@ public class RepositoryRestMvcConfig extends RepositoryRestMvcConfiguration {
     @Bean
     public ExternalReferenceEventHandler externalReferenceListener() {
         return new ExternalReferenceEventHandler();
-    }
-
-    @Bean
-    public ExternalReferenceTypeEventHandler externalReferenceTypeListener() {
-        return new ExternalReferenceTypeEventHandler();
     }
 
 }

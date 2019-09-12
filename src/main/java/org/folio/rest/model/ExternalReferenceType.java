@@ -6,22 +6,22 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
-@Entity
-public class ExternalReferenceType {
+import org.folio.rest.domain.model.AbstractBaseEntity;
 
-  @Id
+@Entity
+public class ExternalReferenceType extends AbstractBaseEntity {
+
   @NotNull
   @Column(unique = true, nullable = false)
   private String name;
 
   @ElementCollection
-  private List<String> distinctives;
+  private List<String> allowedKeys;
 
   public ExternalReferenceType() {
-    distinctives = new ArrayList<String>();
+    allowedKeys = new ArrayList<String>();
   }
 
   public String getName() {
@@ -32,12 +32,12 @@ public class ExternalReferenceType {
     this.name = name;
   }
 
-  public List<String> getDistinctives() {
-    return distinctives;
+  public List<String> getAllowedKeys() {
+    return allowedKeys;
   }
 
-  public void setDistinctives(List<String> distinctives) {
-    this.distinctives = distinctives;
+  public void setAllowedKeys(List<String> allowedKeys) {
+    this.allowedKeys = allowedKeys;
   }
 
 }

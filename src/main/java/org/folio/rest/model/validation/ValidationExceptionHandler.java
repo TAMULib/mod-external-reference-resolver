@@ -30,7 +30,7 @@ public class ValidationExceptionHandler {
   @ExceptionHandler(TransactionSystemException.class)
   public @ResponseBody String handleValidationException(TransactionSystemException exception) {
     try {
-      ConstraintViolationException cve = (ConstraintViolationException)exception.getCause().getCause();
+      ConstraintViolationException cve = (ConstraintViolationException) exception.getCause().getCause();
       Map<String, Object> validationExceptionResponse = new HashMap<String,Object>();
       Map<String, String> violations = new HashMap<String,String>();
       for (ConstraintViolation<?> violation : cve.getConstraintViolations()) {
@@ -46,4 +46,5 @@ public class ValidationExceptionHandler {
       return exception.getMessage();
     }
   }
+
 }

@@ -4,32 +4,51 @@
   "type" : "object",
   "additionalProperties" : false,
   "properties" : {
-    "internalReference" : {
+    "id" : {
+      "type" : "string"
+    },
+    "folioReference" : {
       "type" : "string"
     },
     "externalReference" : {
       "type" : "string"
     },
-    "values" : {
-      "type" : "object",
-      "additionalProperties" : {
-        "type" : "string"
+    "distinctives" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/definitions/ExternalReferenceValue"
       }
     },
     "type" : {
       "$ref" : "#/definitions/ExternalReferenceType"
     }
   },
-  "required" : [ "internalReference", "externalReference", "type" ],
+  "required" : [ "folioReference", "externalReference", "type" ],
   "definitions" : {
+    "ExternalReferenceValue" : {
+      "type" : "object",
+      "additionalProperties" : false,
+      "properties" : {
+        "key" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string"
+        }
+      },
+      "required" : [ "key", "value" ]
+    },
     "ExternalReferenceType" : {
       "type" : "object",
       "additionalProperties" : false,
       "properties" : {
+        "id" : {
+          "type" : "string"
+        },
         "name" : {
           "type" : "string"
         },
-        "distinctives" : {
+        "allowedKeys" : {
           "type" : "array",
           "items" : {
             "type" : "string"
