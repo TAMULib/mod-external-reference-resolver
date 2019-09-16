@@ -15,6 +15,7 @@ import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceProcessor;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,6 +41,12 @@ public class ReferenceLinkController implements ResourceProcessor<Resource<Refer
   public @ResponseBody ResponseEntity<List<ReferenceLink>> findAllByTypeName(@PathVariable String name) {
     logger.info("Finding all ExternalReference by type name: {}", name);
     return ResponseEntity.ok(referenceLinkRepo.findAllByTypeName(name));
+  }
+
+  @DeleteMapping("/referenceLinks/type/name/{name}")
+  public @ResponseBody ResponseEntity<Long> deleteAllByTypeName(@PathVariable String name) {
+    logger.info("Deleting all ExternalReference by type name: {}", name);
+    return ResponseEntity.ok(referenceLinkRepo.deleteByTypeName(name));
   }
 
   @Override
