@@ -1,17 +1,14 @@
 {
   "$schema" : "http://json-schema.org/draft-04/schema#",
-  "title" : "External Reference Type",
+  "title" : "Reference Link Type",
   "type" : "object",
   "additionalProperties" : false,
   "properties" : {
-    "name" : {
+    "id" : {
       "type" : "string"
     },
-    "distinctives" : {
-      "type" : "array",
-      "items" : {
-        "type" : "string"
-      }
+    "name" : {
+      "type" : "string"
     }
   },
   "required" : [ "name" ]
