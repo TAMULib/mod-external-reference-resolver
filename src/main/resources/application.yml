@@ -28,7 +28,7 @@ spring:
     password: folio
   h2:
     console: 
-      enabled: false
+      enabled: true
       path: /h2console
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
