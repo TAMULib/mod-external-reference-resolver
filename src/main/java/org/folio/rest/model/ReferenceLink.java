@@ -15,14 +15,16 @@ public class ReferenceLink extends AbstractBaseEntity {
   private String folioReference;
 
   @NotNull
-  @Column
+  @Column(nullable = false)
   private String externalReference;
 
   @NotNull
   @ManyToOne
   private ReferenceLinkType type;
 
-  public ReferenceLink() {}
+  public ReferenceLink() {
+    super();
+  }
 
   public String getFolioReference() {
     return folioReference;
