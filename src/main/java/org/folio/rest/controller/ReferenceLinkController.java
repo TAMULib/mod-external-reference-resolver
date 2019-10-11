@@ -33,11 +33,11 @@ public class ReferenceLinkController implements ResourceProcessor<Resource<Refer
   @Autowired
   private ReferenceLinkRepo referenceLinkRepo;
 
-  // @GetMapping("/type/{id}")
-  // public @ResponseBody ResponseEntity<List<ReferenceLink>> findAllByTypeId(@PathVariable String id) {
-  //   logger.info("Finding all ExternalReference by type id: {}", id);
-  //   return ResponseEntity.ok(referenceLinkRepo.findAllByTypeId(id));
-  // }
+  @GetMapping("/type/{id}")
+  public @ResponseBody ResponseEntity<List<ReferenceLink>> findAllByTypeId(@PathVariable String id) {
+    logger.info("Finding all ExternalReference by type id: {}", id);
+    return ResponseEntity.ok(referenceLinkRepo.findAllByTypeId(id));
+  }
 
   @GetMapping("/type/name/{name}")
   public @ResponseBody ResponseEntity<List<ReferenceLink>> findAllByTypeName(@PathVariable String name) {
@@ -58,12 +58,12 @@ public class ReferenceLinkController implements ResourceProcessor<Resource<Refer
         ControllerLinkBuilder
           .methodOn(ReferenceLinkController.class)
           .findAllByTypeName(resource.getContent().getType().getName())
-      ).withRel("findAllByTypeName")
-      // ControllerLinkBuilder.linkTo(
-      //   ControllerLinkBuilder
-      //     .methodOn(ReferenceLinkController.class)
-      //     .findAllByTypeId(resource.getContent().getType().getId())
-      // ).withRel("findAllByTypeId")
+      ).withRel("findAllByTypeName"),
+      ControllerLinkBuilder.linkTo(
+        ControllerLinkBuilder
+          .methodOn(ReferenceLinkController.class)
+          .findAllByTypeId(resource.getContent().getType().getId())
+      ).withRel("findAllByTypeId")
     );
     return resource;
   }
