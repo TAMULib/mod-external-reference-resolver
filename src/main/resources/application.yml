@@ -17,12 +17,12 @@ spring:
     returnBodyOnCreate: true
     returnBodyOnUpdate: true
   datasource:
-    # platform: h2
-    # url: jdbc:h2:./target/mod-external-reference-resolver;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    # driverClassName: org.h2.Driver
-    platform: postgres
-    driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/mod-external-reference-resolver
+    platform: h2
+    url: jdbc:h2:./target/mod-external-reference-resolver;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    # platform: postgres
+    # driverClassName: org.postgresql.Driver
+    # url: jdbc:postgresql://localhost:5432/mod-external-reference-resolver
     
     username: folio
     password: folio
@@ -49,6 +49,6 @@ tenant:
   header-name: X-Okapi-Tenant
   force-tenant: false
   default-tenant: diku
-  initialize-default-tenant: false
+  initialize-default-tenant: true
   domain-packages:
   schema-scripts:
