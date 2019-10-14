@@ -9,7 +9,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.transaction.annotation.Transactional;
 
 @RepositoryRestResource
-public interface ReferenceLinkRepo extends JpaRepository<ReferenceLink, String> {
+public interface ReferenceLinkRepo extends JpaRepository<ReferenceLink, String>, ReferenceLinkRepoCustom {
 
   public List<ReferenceLink> findAllByTypeName(@Param("typeName") String typeName);
 

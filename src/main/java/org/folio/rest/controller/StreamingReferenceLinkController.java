@@ -6,8 +6,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.folio.rest.model.ReferenceLink;
+import org.folio.rest.model.repo.ReferenceLinkRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,11 +27,13 @@ public class StreamingReferenceLinkController {
   @PersistenceContext
   private EntityManager entityManager;
 
+  @Autowired
+  private ReferenceLinkRepo referenceLinkRepo;
+
   @GetMapping(value = "/type/{typeId}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
   public Flux<ReferenceLink> streamAllByTypeId(@PathVariable String typeId) throws IOException {
     logger.info("Streaming all ExternalReference by type id: {}", typeId);
-    String query = String.format("SELECT r FROM ReferenceLink r WHERE r.type.id = '%s'", typeId);
-    return Flux.fromStream(entityManager.createQuery(query, ReferenceLink.class).getResultStream());
+    return Flux.fromStream(referenceLinkRepo.streamAllByType(typeId));
   }
 
 }
