@@ -38,7 +38,7 @@ spring:
     generate-ddl: false
     hibernate.ddl-auto: none
     open-in-view: true
-    show-sql: false
+    show-sql: true
   profiles:
     active: default
   thymeleaf:
