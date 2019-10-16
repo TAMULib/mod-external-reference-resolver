@@ -12,9 +12,9 @@ import org.folio.rest.model.ReferenceLink;
 
 public class ReferenceLinkRepoImpl implements ReferenceLinkRepoCustom {
 
-  private final static String ID = "id";
-  private final static String TYPE = "type";
-  private final static String EXTERNAL_REFERENCE = "externalReference";
+  private static final String ID = "id";
+  private static final String TYPE = "type";
+  private static final String EXTERNAL_REFERENCE = "externalReference";
 
   @PersistenceContext
   private EntityManager entityManager;

@@ -2,9 +2,6 @@ package org.folio.rest.controller;
 
 import java.io.IOException;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.folio.rest.model.ReferenceLink;
 import org.folio.rest.model.repo.ReferenceLinkRepo;
 import org.slf4j.Logger;
@@ -23,9 +20,6 @@ import reactor.core.publisher.Flux;
 public class StreamingReferenceLinkController {
 
   private static final Logger logger = LoggerFactory.getLogger(StreamingReferenceLinkController.class);
-
-  @PersistenceContext
-  private EntityManager entityManager;
 
   @Autowired
   private ReferenceLinkRepo referenceLinkRepo;

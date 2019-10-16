@@ -2,9 +2,6 @@ package org.folio.rest.controller;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.folio.rest.model.ReferenceLink;
 import org.folio.rest.model.repo.ReferenceLinkRepo;
 import org.slf4j.Logger;
@@ -26,9 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ReferenceLinkController implements ResourceProcessor<Resource<ReferenceLink>> {
 
   private static final Logger logger = LoggerFactory.getLogger(ReferenceLinkController.class);
-
-  @PersistenceContext
-  EntityManager em;
 
   @Autowired
   private ReferenceLinkRepo referenceLinkRepo;
