@@ -6,6 +6,6 @@ import org.folio.rest.model.ReferenceLink;
 
 public interface ReferenceLinkRepoCustom {
 
-  Stream<ReferenceLink> streamAllByType(String typeId);
+  public Stream<ReferenceLink> streamAllByTypeIdOrderByExternalReferenceAsc(String typeId);
 
 }
