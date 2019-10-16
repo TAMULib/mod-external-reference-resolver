@@ -33,7 +33,7 @@ public class StreamingReferenceLinkController {
   @GetMapping(value = "/type/{typeId}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
   public Flux<ReferenceLink> streamAllByTypeId(@PathVariable String typeId) throws IOException {
     logger.info("Streaming all ExternalReference by type id: {}", typeId);
-    return Flux.fromStream(referenceLinkRepo.streamAllByType(typeId));
+    return Flux.fromStream(referenceLinkRepo.streamAllByTypeIdOrderByExternalReferenceAsc(typeId));
   }
 
 }
