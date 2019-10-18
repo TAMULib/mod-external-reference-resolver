@@ -13,7 +13,9 @@ public class ReferenceLinkType extends AbstractBaseEntity {
   @Column(unique = true, nullable = false)
   private String name;
 
-  public ReferenceLinkType() {}
+  public ReferenceLinkType() {
+    super();
+  }
 
   public String getName() {
     return name;

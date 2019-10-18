@@ -10,7 +10,7 @@ logging:
   path:
 
 server:
-  port: 9000
+  port: 9003
 
 spring:
   data.rest:
@@ -30,6 +30,8 @@ spring:
     console: 
       enabled: true
       path: /h2console
+      settings:
+        web-allow-others: true
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     # database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -38,7 +40,7 @@ spring:
     generate-ddl: false
     hibernate.ddl-auto: none
     open-in-view: true
-    show-sql: false
+    show-sql: true
   profiles:
     active: default
   thymeleaf:
@@ -48,7 +50,7 @@ spring:
 tenant:
   header-name: X-Okapi-Tenant
   force-tenant: false
-  default-tenant: diku
-  initialize-default-tenant: true
+  default-tenant: tern
+  initialize-default-tenant: false
   domain-packages:
   schema-scripts:
