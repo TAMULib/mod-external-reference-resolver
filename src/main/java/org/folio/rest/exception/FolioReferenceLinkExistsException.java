@@ -7,7 +7,7 @@ public class FolioReferenceLinkExistsException extends ReferenceLinkExistsExcept
   private static final long serialVersionUID = -1213554355092812227L;
 
   public FolioReferenceLinkExistsException(ReferenceLink referenceLink) {
-    super("Folio Reference Link Already Exists", referenceLink);
+    super("Reference Link already exists for the given Folio Reference and Type.", referenceLink);
   }
 
 }

@@ -7,7 +7,7 @@ public class ExternalReferenceLinkExistsException extends ReferenceLinkExistsExc
   private static final long serialVersionUID = -4470647079772964748L;
 
   public ExternalReferenceLinkExistsException(ReferenceLink referenceLink) {
-    super("External Reference Link Already Exists", referenceLink);
+    super("Reference Link already exists for the given External Reference and Type.", referenceLink);
   }
 
 }
