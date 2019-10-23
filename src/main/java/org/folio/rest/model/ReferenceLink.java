@@ -12,12 +12,13 @@ import org.folio.rest.domain.model.AbstractBaseEntity;
 
 @Entity
 @Table(uniqueConstraints = {
-  @UniqueConstraint(columnNames = { "externalReference", "type_id" })
+  @UniqueConstraint(columnNames = { "externalReference", "type_id" }),
+  @UniqueConstraint(columnNames = { "folioReference", "type_id" })
 })
 public class ReferenceLink extends AbstractBaseEntity {
 
   @NotNull
-  @Column(unique = true, nullable = false)
+  @Column(nullable = false)
   private String folioReference;
 
   @NotNull
