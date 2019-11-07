@@ -50,7 +50,7 @@ spring:
 tenant:
   header-name: X-Okapi-Tenant
   force-tenant: false
-  default-tenant: tern
-  initialize-default-tenant: false
+  default-tenant: diku
+  initialize-default-tenant: true
   domain-packages:
   schema-scripts:
