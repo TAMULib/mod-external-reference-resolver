@@ -25,7 +25,7 @@ public class ReferenceLinkRepoImpl implements ReferenceLinkRepoCustom {
     CriteriaQuery<ReferenceLink> cq = cb.createQuery(ReferenceLink.class);
     Root<ReferenceLink> link = cq.from(ReferenceLink.class);
     cq.where(cb.equal(link.get(TYPE).get(ID), typeId));
-    cq.orderBy(cb.asc(link.get(EXTERNAL_REFERENCE).as(Integer.class)));
+    cq.orderBy(cb.asc(link.get(EXTERNAL_REFERENCE).as(String.class)));
     return entityManager.createQuery(cq).getResultStream();
   }
 

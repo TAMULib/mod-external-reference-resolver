@@ -2,16 +2,23 @@ package org.folio.rest.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.folio.rest.domain.model.AbstractBaseEntity;
 
 @Entity
+@Table(uniqueConstraints = {
+  @UniqueConstraint(columnNames = { "externalReference", "type_id" }),
+  @UniqueConstraint(columnNames = { "folioReference", "type_id" })
+})
 public class ReferenceLink extends AbstractBaseEntity {
 
   @NotNull
-  @Column(unique = true, nullable = false)
+  @Column(nullable = false)
   private String folioReference;
 
   @NotNull
@@ -20,6 +27,7 @@ public class ReferenceLink extends AbstractBaseEntity {
 
   @NotNull
   @ManyToOne
+  @JoinColumn(name="type_id")
   private ReferenceLinkType type;
 
   public ReferenceLink() {

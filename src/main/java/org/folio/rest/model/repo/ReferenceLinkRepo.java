@@ -1,6 +1,7 @@
 package org.folio.rest.model.repo;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.folio.rest.model.ReferenceLink;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,14 +15,20 @@ public interface ReferenceLinkRepo extends JpaRepository<ReferenceLink, String>,
   public List<ReferenceLink> findAllByTypeName(@Param("typeName") String typeName);
 
   public List<ReferenceLink> findAllByTypeNameAndExternalReference(@Param("typeName") String typeName,
-      @Param("externalReference") String externalReference);
+    @Param("externalReference") String externalReference);
 
   public List<ReferenceLink> findAllByTypeId(@Param("typeId") String typeId);
 
   public List<ReferenceLink> findAllByTypeIdAndExternalReference(@Param("typeId") String typeId,
-      @Param("externalReference") String externalReference);
+    @Param("externalReference") String externalReference);
 
   public List<ReferenceLink> findAllByFolioReference(@Param("folioReference") String folioReference);
+
+  public Optional<ReferenceLink> findByTypeIdAndExternalReference(@Param("typeId") String typeId,
+    @Param("externalReference") String externalReference);
+
+  public Optional<ReferenceLink> findByTypeIdAndFolioReference(@Param("typeId") String typeId,
+    @Param("folioReference") String folioReference);
 
   @Transactional
   public long deleteByTypeName(@Param("typeName") String typeName);
