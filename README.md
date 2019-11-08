@@ -7,6 +7,21 @@ See the file ["LICENSE"](LICENSE) for more information.
 
 ## Additional information
 
+## Docker deployment
+
+```
+docker build -t folio/mod-external-reference-resolver .
+docker run -d -p 9003:9003 folio/mod-external-reference-resolver
+```
+
+### Publish docker image
+
+```
+docker login [docker repo]
+docker build -t [docker repo]/folio/mod-external-reference-resolver:[version] .
+docker push [docker repo]/folio/mod-external-reference-resolver:[version]
+```
+
 ### Issue tracker
 
 See project [FOLIO](https://issues.folio.org/browse/FOLIO)
