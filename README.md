@@ -17,6 +17,7 @@ docker run -d -p 9003:9003 folio/mod-external-reference-resolver
 ### Publish docker image
 
 ```
+docker login [docker repo]
 docker build -t [docker repo]/folio/mod-external-reference-resolver:[version] .
 docker push [docker repo]/folio/mod-external-reference-resolver:[version]
 ```
