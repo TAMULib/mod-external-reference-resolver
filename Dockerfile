@@ -1,13 +1,13 @@
 # build base image
-FROM maven:3-jdk-8-slim as maven
+FROM maven:3-jdk-8-alpine as maven
 
 # copy pom.xml
 COPY ./pom.xml ./pom.xml
 
-# copy components files
+# copy src files
 COPY ./src ./src
 
-# build service
+# build
 RUN mvn package
 
 # final base image
