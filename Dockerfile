@@ -30,6 +30,7 @@ ENV SPRING_DATASOURCE_PASSWORD='folio'
 ENV SPRING_H2_CONSOLE_ENABLED='true'
 ENV SPRING_JPA_DATABASE_PLATFORM='org.hibernate.dialect.H2Dialect'
 ENV TENANT_DEFAULT_TENANT='tern'
+ENV TENANT_INITIALIZE_DEFAULT_TENANT='false'
 
 #expose port
 EXPOSE ${SERVER_PORT}
@@ -40,4 +41,4 @@ CMD java -jar ./mod-external-reference-resolver.jar \
     --spring.datasource.url=${SPRING_DATASOURCE_URL} --spring.datasource.driverClassName=${SPRING_DATASOURCE_DRIVERCLASSNAME} \
     --spring.datasource.username=${SPRING_DATASOURCE_USERNAME} --spring.datasource.password=${SPRING_DATASOURCE_PASSWORD} \
     --spring.h2.console.enabled=${SPRING_H2_CONSOLE_ENABLED} --spring.jpa.database-platform=${SPRING_JPA_DATABASE_PLATFORM} \
-    --tenant.default-tenant=${TENANT_DEFAULT_TENANT}
+    --tenant.default-tenant=${TENANT_DEFAULT_TENANT} --initialize-default-tenant=${TENANT_INITIALIZE_DEFAULT_TENANT}
