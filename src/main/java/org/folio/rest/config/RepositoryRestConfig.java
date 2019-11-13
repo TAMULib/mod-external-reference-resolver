@@ -8,7 +8,8 @@ import org.springframework.context.annotation.Configuration;
 public class RepositoryRestConfig {
 
   @Bean
-  ReferenceLinkEventHandler referenceLinkEventHandler() {
+  public ReferenceLinkEventHandler referenceLinkEventHandler() {
     return new ReferenceLinkEventHandler();
   }
+
 }
