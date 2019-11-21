@@ -7,13 +7,15 @@ logging:
       springframework:
         security: INFO
         web: INFO
-  path:
 
 server:
   port: 9003
   tomcat:
-    # 10 hour timeout
-    connection-timeout: 36000000
+    connection-timeout: -1
+    accept-count: 1000
+    max-connections: 100000
+    max-threads: 400
+    
 
 spring:
   data.rest:
