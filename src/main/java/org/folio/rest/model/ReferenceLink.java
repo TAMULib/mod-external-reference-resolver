@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-import org.folio.rest.domain.model.AbstractBaseEntity;
+import org.folio.spring.domain.model.AbstractBaseEntity;
 
 @Entity
 @Table(uniqueConstraints = {
