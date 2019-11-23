@@ -21,9 +21,12 @@ public interface ReferenceLinkRepo extends JpaRepository<ReferenceLink, String>,
 
   public List<ReferenceLink> findAllByFolioReference(String folioReference);
 
-  public Optional<ReferenceLink> findByTypeIdAndExternalReference(String typeId, String externalReference);
+  public List<ReferenceLink> findByTypeIdAndExternalReference(String typeId, String externalReference);
 
-  public Optional<ReferenceLink> findByTypeIdAndFolioReference(String typeId, String folioReference);
+  public List<ReferenceLink> findByTypeIdAndFolioReference(String typeId, String folioReference);
+
+  public Optional<ReferenceLink> findByTypeIdAndExternalReferenceAndFolioReference(String typeId,
+      String externalReference, String folioReference);
 
   @Transactional
   public long deleteByTypeName(String typeName);
