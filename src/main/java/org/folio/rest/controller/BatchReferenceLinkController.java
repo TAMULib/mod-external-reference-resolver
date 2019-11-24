@@ -24,8 +24,12 @@ public class BatchReferenceLinkController {
 
   @PostMapping
   public List<ReferenceLink> batchCreate(@RequestBody List<ReferenceLink> referenceLinks) throws IOException {
-    logger.info("Creating {} ReferenceLinks", referenceLinks.size());
-    return referenceLinkRepo.saveAll(referenceLinks);
+    long startTime = System.nanoTime();
+    referenceLinks = referenceLinkRepo.saveAll(referenceLinks);
+    long stopTime = System.nanoTime();
+    double duration = (stopTime - startTime) / (double) 1000000;
+    logger.info("Created {} ReferenceLinks in {} milliseconds", referenceLinks.size(), duration);
+    return referenceLinks;
   }
 
 }
