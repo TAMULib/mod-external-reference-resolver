@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.folio.rest.model.ReferenceLink;
 import org.folio.rest.model.repo.ReferenceLinkRepo;
+import org.folio.rest.model.response.ReferenceLinkGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,15 @@ public class StreamingReferenceLinkController {
 
   @GetMapping(value = "/type/{typeId}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
   public Flux<ReferenceLink> streamAllByTypeId(@PathVariable String typeId) throws IOException {
-    logger.info("Streaming all ExternalReference by type id: {}", typeId);
+    logger.info("Streaming all ExternalReference by type id {}", typeId);
     return Flux.fromStream(referenceLinkRepo.streamAllByTypeIdOrderByExternalReferenceAsc(typeId));
+  }
+
+  @GetMapping(value = "/type/{typeId}/groupBy/{groupByTypeId}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+  public Flux<ReferenceLinkGroup> streamAllByTypeIdGroupByTypeId(@PathVariable String typeId, 
+      @PathVariable String groupByTypeId) throws IOException {
+    logger.info("Streaming all ExternalReference by type id {} grouped by type id {}", typeId);
+    return Flux.fromStream(referenceLinkRepo.streamAllByTypeIdGroupByTypeIdOrderByExternalReferenceAsc(typeId, groupByTypeId));
   }
 
 }
