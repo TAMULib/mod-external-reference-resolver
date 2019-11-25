@@ -12,8 +12,7 @@ import org.folio.spring.domain.model.AbstractBaseEntity;
 
 @Entity
 @Table(uniqueConstraints = {
-  @UniqueConstraint(columnNames = { "externalReference", "type_id" }),
-  @UniqueConstraint(columnNames = { "folioReference", "type_id" })
+  @UniqueConstraint(columnNames = { "folioReference", "externalReference", "type_id" })
 })
 public class ReferenceLink extends AbstractBaseEntity {
 
