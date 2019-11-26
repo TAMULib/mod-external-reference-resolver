@@ -10,7 +10,7 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Root;
 
 import org.folio.rest.model.ReferenceLink;
-import org.folio.rest.model.response.ReferenceLinkWithCollect;
+import org.folio.rest.model.response.CollectorReferenceLink;
 
 public class ReferenceLinkRepoImpl implements ReferenceLinkRepoCustom {
 
@@ -35,21 +35,31 @@ public class ReferenceLinkRepoImpl implements ReferenceLinkRepoCustom {
   }
 
   @Override
-  public Stream<ReferenceLinkWithCollect> streamAllByTypeIdCollectingTypeIdOrderByExternalReferenceAsc(String typeId,
+  public Stream<CollectorReferenceLink> streamAllByTypeIdCollectingTypeIdOrderByExternalReferenceAsc(String typeId,
       String collectTypeId) {
     CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-    CriteriaQuery<ReferenceLinkWithCollect> cq = cb.createQuery(ReferenceLinkWithCollect.class);
+    CriteriaQuery<CollectorReferenceLink> cq = cb.createQuery(CollectorReferenceLink.class);
+
     Root<ReferenceLink> link = cq.from(ReferenceLink.class);
     Root<ReferenceLink> references = cq.from(ReferenceLink.class);
+
     Expression<String[]> stringAgg = cb.function(ARRAY_AGG, String[].class, references.get(FOLIO_REFERENCE));
-    cq.select(cb.construct(ReferenceLinkWithCollect.class, link, stringAgg));
+
     // @formatter:off
+    cq.select(cb.construct(CollectorReferenceLink.class,
+        link.get(ID),
+        link.get(TYPE).get(ID),
+        link.get(FOLIO_REFERENCE),
+        link.get(EXTERNAL_REFERENCE),
+        stringAgg));
+
     cq.where(
       cb.and(cb.equal(link.get(ID), references.get(EXTERNAL_REFERENCE)),
       cb.equal(link.get(TYPE).get(ID), typeId),
       cb.equal(references.get(TYPE).get(ID), collectTypeId))
     );
     // @formatter:on
+
     cq.groupBy(link.get(ID));
     cq.orderBy(cb.asc(link.get(EXTERNAL_REFERENCE).as(String.class)));
     return entityManager.createQuery(cq).getResultStream();
