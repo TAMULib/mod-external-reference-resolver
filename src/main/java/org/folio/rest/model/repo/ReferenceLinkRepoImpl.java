@@ -1,34 +1,28 @@
 package org.folio.rest.model.repo;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Root;
 
 import org.folio.rest.model.ReferenceLink;
-import org.folio.rest.model.ReferenceLinkType;
-import org.folio.rest.model.response.ReferenceLinkGroup;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.folio.rest.model.response.ReferenceLinkWithCollect;
 
 public class ReferenceLinkRepoImpl implements ReferenceLinkRepoCustom {
 
   private static final String ID = "id";
   private static final String TYPE = "type";
+  private static final String FOLIO_REFERENCE = "folioReference";
   private static final String EXTERNAL_REFERENCE = "externalReference";
+
+  private static final String ARRAY_AGG = "array_agg";
 
   @PersistenceContext
   private EntityManager entityManager;
-
-  @Autowired
-  private ReferenceLinkRepo referenceLinkRepo;
-
-  @Autowired
-  private ReferenceLinkTypeRepo referenceLinkTypeRepo;
 
   @Override
   public Stream<ReferenceLink> streamAllByTypeIdOrderByExternalReferenceAsc(String typeId) {
@@ -41,20 +35,24 @@ public class ReferenceLinkRepoImpl implements ReferenceLinkRepoCustom {
   }
 
   @Override
-  public Stream<ReferenceLinkGroup> streamAllByTypeIdGroupByTypeIdOrderByExternalReferenceAsc(String typeId, String groupByTypeId) {
-    Optional<ReferenceLinkType> groupBy = referenceLinkTypeRepo.findById(groupByTypeId);
-    if (!groupBy.isPresent()) {
-
-    }
+  public Stream<ReferenceLinkWithCollect> streamAllByTypeIdCollectingTypeIdOrderByExternalReferenceAsc(String typeId,
+      String collectTypeId) {
     CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-    CriteriaQuery<ReferenceLink> cq = cb.createQuery(ReferenceLink.class);
+    CriteriaQuery<ReferenceLinkWithCollect> cq = cb.createQuery(ReferenceLinkWithCollect.class);
     Root<ReferenceLink> link = cq.from(ReferenceLink.class);
-    cq.where(cb.equal(link.get(TYPE).get(ID), typeId));
+    Root<ReferenceLink> references = cq.from(ReferenceLink.class);
+    Expression<String[]> stringAgg = cb.function(ARRAY_AGG, String[].class, references.get(FOLIO_REFERENCE));
+    cq.select(cb.construct(ReferenceLinkWithCollect.class, link, stringAgg));
+    // @formatter:off
+    cq.where(
+      cb.and(cb.equal(link.get(ID), references.get(EXTERNAL_REFERENCE)),
+      cb.equal(link.get(TYPE).get(ID), typeId),
+      cb.equal(references.get(TYPE).get(ID), collectTypeId))
+    );
+    // @formatter:on
+    cq.groupBy(link.get(ID));
     cq.orderBy(cb.asc(link.get(EXTERNAL_REFERENCE).as(String.class)));
-    return entityManager.createQuery(cq).getResultStream().map(rl -> {
-      List<ReferenceLink> references = referenceLinkRepo.findByTypeIdAndExternalReference(typeId, rl.getId());
-      return ReferenceLinkGroup.of(rl, groupBy.get(), references);
-    });
+    return entityManager.createQuery(cq).getResultStream();
   }
 
 }
