@@ -25,12 +25,12 @@ spring:
     hikari:
       connectionTimeout: 3600000
       maximumPoolSize: 100
-    # platform: h2
-    # url: jdbc:h2:./target/mod-external-reference-resolver;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    # driverClassName: org.h2.Driver
-    platform: postgres
-    driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/mod-external-reference-resolver
+    platform: h2
+    url: jdbc:h2:./target/mod-external-reference-resolver;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    # platform: postgres
+    # driverClassName: org.postgresql.Driver
+    # url: jdbc:postgresql://localhost:5432/mod-external-reference-resolver
     
     username: folio
     password: folio
@@ -46,13 +46,13 @@ spring:
       settings:
         web-allow-others: true
   jpa:
-    # database-platform: org.hibernate.dialect.H2Dialect
-    database-platform: org.hibernate.dialect.PostgreSQL82Dialect
+    database-platform: org.hibernate.dialect.H2Dialect
+    # database-platform: org.hibernate.dialect.PostgreSQL82Dialect
     
     properties:
       hibernate:
-        # dialect: org.folio.rest.dialect.CustomH2Dialect
-        dialect: org.folio.rest.dialect.CustomPostgreSQLDialect
+        dialect: org.folio.rest.dialect.CustomH2Dialect
+        # dialect: org.folio.rest.dialect.CustomPostgreSQLDialect
         jdbc.lob.non_contextual_creation: true
     generate-ddl: false
     hibernate.ddl-auto: none
