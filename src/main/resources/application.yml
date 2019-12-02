@@ -7,16 +7,24 @@ logging:
       springframework:
         security: INFO
         web: INFO
-  path:
 
 server:
   port: 9003
+  tomcat:
+    connection-timeout: -1
+    accept-count: 1000
+    max-connections: 100000
+    max-threads: 400
+    
 
 spring:
   data.rest:
     returnBodyOnCreate: true
     returnBodyOnUpdate: true
   datasource:
+    hikari:
+      connectionTimeout: 3600000
+      maximumPoolSize: 100
     platform: h2
     url: jdbc:h2:./target/mod-external-reference-resolver;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     driverClassName: org.h2.Driver
@@ -26,6 +34,11 @@ spring:
     
     username: folio
     password: folio
+  devtools:
+    add-properties: false
+    restart:
+      enabled: true
+      exclude: target
   h2:
     console: 
       enabled: true
@@ -34,9 +47,18 @@ spring:
         web-allow-others: true
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-    # database-platform: org.hibernate.dialect.PostgreSQLDialect
+    # database-platform: org.hibernate.dialect.PostgreSQL82Dialect
     
-    properties.hibernate.jdbc.lob.non_contextual_creation: true
+    properties:
+      hibernate:
+        order_inserts: true
+        order_updates: true
+        dialect: org.folio.rest.dialect.CustomH2Dialect
+        # dialect: org.folio.rest.dialect.CustomPostgreSQLDialect
+        jdbc:
+          batch_size: 100
+          lob.non_contextual_creation: true
+
     generate-ddl: false
     hibernate.ddl-auto: none
     open-in-view: true
