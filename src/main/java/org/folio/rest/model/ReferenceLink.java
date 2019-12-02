@@ -2,6 +2,7 @@ package org.folio.rest.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -11,9 +12,17 @@ import javax.validation.constraints.NotNull;
 import org.folio.spring.domain.model.AbstractBaseEntity;
 
 @Entity
-@Table(uniqueConstraints = {
-  @UniqueConstraint(columnNames = { "folioReference", "externalReference", "type_id" })
-})
+// @formatter:off
+@Table(
+  uniqueConstraints = {
+    @UniqueConstraint(columnNames = { "folioReference", "externalReference", "type_id" })
+  },
+  indexes = {
+    @Index(columnList = "type_id,externalReference"),
+    @Index(columnList = "type_id,id,externalreference")
+  }
+)
+//@formatter:on
 public class ReferenceLink extends AbstractBaseEntity {
 
   @NotNull
@@ -26,7 +35,7 @@ public class ReferenceLink extends AbstractBaseEntity {
 
   @NotNull
   @ManyToOne
-  @JoinColumn(name="type_id")
+  @JoinColumn(name = "type_id")
   private ReferenceLinkType type;
 
   public ReferenceLink() {

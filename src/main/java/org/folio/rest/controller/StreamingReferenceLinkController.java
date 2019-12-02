@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.folio.rest.model.ReferenceLink;
 import org.folio.rest.model.repo.ReferenceLinkRepo;
-import org.folio.rest.model.response.ReferenceLinkWithCollect;
+import org.folio.rest.model.response.CollectorReferenceLink;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class StreamingReferenceLinkController {
   }
 
   @GetMapping(value = "/type/{typeId}/collect/{collectTypeId}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
-  public Flux<ReferenceLinkWithCollect> streamAllByTypeIdCollectingTypeId(@PathVariable String typeId,
+  public Flux<CollectorReferenceLink> streamAllByTypeIdCollectingTypeId(@PathVariable String typeId,
       @PathVariable String collectTypeId) throws IOException {
     logger.info("Streaming all ExternalReference by type id {} collect type id {}", typeId, collectTypeId);
     return Flux.fromStream(
