@@ -18,6 +18,7 @@ import org.folio.spring.domain.model.AbstractBaseEntity;
     @UniqueConstraint(columnNames = { "folioReference", "externalReference", "type_id" })
   },
   indexes = {
+    @Index(columnList = "type_id,externalReference"),
     @Index(columnList = "type_id,id,externalreference")
   }
 )
