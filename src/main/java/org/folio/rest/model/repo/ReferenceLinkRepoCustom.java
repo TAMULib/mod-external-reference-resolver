@@ -7,7 +7,8 @@ import org.folio.rest.model.response.CollectorReferenceLink;
 
 public interface ReferenceLinkRepoCustom {
 
-  public Stream<ReferenceLink> streamAllByTypeIdOrderByExternalReferenceAsc(String typeId);
+  public Stream<ReferenceLink> streamAllByTypeIdOrderByExternalReferenceAsc(String typeId, String orderClass)
+      throws ClassNotFoundException;
 
   public Stream<CollectorReferenceLink> streamAllByTypeIdCollectingTypeIdOrderByExternalReferenceAsc(String typeId,
       String collectTypeId);

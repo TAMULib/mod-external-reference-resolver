@@ -21,16 +21,20 @@ public class ReferenceLinkRepoImpl implements ReferenceLinkRepoCustom {
 
   private static final String ARRAY_AGG = "array_agg";
 
+  private static final String JAVA_LANG__CLASS_TEMPLATE = "java.lang.%s";
+
   @PersistenceContext
   private EntityManager entityManager;
 
   @Override
-  public Stream<ReferenceLink> streamAllByTypeIdOrderByExternalReferenceAsc(String typeId) {
+  public Stream<ReferenceLink> streamAllByTypeIdOrderByExternalReferenceAsc(String typeId, String orderClass)
+      throws ClassNotFoundException {
     CriteriaBuilder cb = entityManager.getCriteriaBuilder();
     CriteriaQuery<ReferenceLink> cq = cb.createQuery(ReferenceLink.class);
     Root<ReferenceLink> link = cq.from(ReferenceLink.class);
     cq.where(cb.equal(link.get(TYPE).get(ID), typeId));
-    cq.orderBy(cb.asc(link.get(EXTERNAL_REFERENCE).as(String.class)));
+    Class<?> orderByClass = Class.forName(String.format(JAVA_LANG__CLASS_TEMPLATE, orderClass));
+    cq.orderBy(cb.asc(link.get(EXTERNAL_REFERENCE).as(orderByClass)));
     return entityManager.createQuery(cq).getResultStream();
   }
 
