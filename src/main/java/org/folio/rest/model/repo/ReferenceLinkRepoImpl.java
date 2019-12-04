@@ -25,12 +25,13 @@ public class ReferenceLinkRepoImpl implements ReferenceLinkRepoCustom {
   private EntityManager entityManager;
 
   @Override
-  public Stream<ReferenceLink> streamAllByTypeIdOrderByExternalReferenceAsc(String typeId) {
+  public Stream<ReferenceLink> streamAllByTypeIdOrderByExternalReferenceAsc(String typeId, String orderClass)
+      throws ClassNotFoundException {
     CriteriaBuilder cb = entityManager.getCriteriaBuilder();
     CriteriaQuery<ReferenceLink> cq = cb.createQuery(ReferenceLink.class);
     Root<ReferenceLink> link = cq.from(ReferenceLink.class);
     cq.where(cb.equal(link.get(TYPE).get(ID), typeId));
-    cq.orderBy(cb.asc(link.get(EXTERNAL_REFERENCE).as(String.class)));
+    cq.orderBy(cb.asc(link.get(EXTERNAL_REFERENCE).as(Class.forName(orderClass))));
     return entityManager.createQuery(cq).getResultStream();
   }
 

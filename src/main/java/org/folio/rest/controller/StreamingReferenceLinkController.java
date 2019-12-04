@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import reactor.core.publisher.Flux;
@@ -26,9 +27,10 @@ public class StreamingReferenceLinkController {
   private ReferenceLinkRepo referenceLinkRepo;
 
   @GetMapping(value = "/type/{typeId}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
-  public Flux<ReferenceLink> streamAllByTypeId(@PathVariable String typeId) throws IOException {
-    logger.info("Streaming all ExternalReference by type id {}", typeId);
-    return Flux.fromStream(referenceLinkRepo.streamAllByTypeIdOrderByExternalReferenceAsc(typeId));
+  public Flux<ReferenceLink> streamAllByTypeId(@PathVariable String typeId,
+      @RequestParam(defaultValue = "Integer") String orderClass) throws IOException, ClassNotFoundException {
+    logger.info("Streaming all ExternalReference by type id {} order by class {}", typeId, orderClass);
+    return Flux.fromStream(referenceLinkRepo.streamAllByTypeIdOrderByExternalReferenceAsc(typeId, orderClass));
   }
 
   @GetMapping(value = "/type/{typeId}/collect/{collectTypeId}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
