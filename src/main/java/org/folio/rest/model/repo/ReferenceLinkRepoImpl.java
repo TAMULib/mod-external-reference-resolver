@@ -11,6 +11,7 @@ import javax.persistence.criteria.Root;
 
 import org.folio.rest.model.ReferenceLink;
 import org.folio.rest.model.response.CollectorReferenceLink;
+import org.folio.rest.model.response.JoinReferenceLink;
 
 public class ReferenceLinkRepoImpl implements ReferenceLinkRepoCustom {
 
@@ -65,6 +66,36 @@ public class ReferenceLinkRepoImpl implements ReferenceLinkRepoCustom {
     // @formatter:on
 
     cq.groupBy(link.get(ID));
+    cq.orderBy(cb.asc(link.get(EXTERNAL_REFERENCE).as(String.class)));
+    return entityManager.createQuery(cq).getResultStream();
+  }
+
+  public Stream<JoinReferenceLink> streamAllByTypeIdJoiningTypeIdOrderByExternalReferenceAsc(String typeId,
+      String joinTypeId) {
+    CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+    CriteriaQuery<JoinReferenceLink> cq = cb.createQuery(JoinReferenceLink.class);
+
+    Root<ReferenceLink> link = cq.from(ReferenceLink.class);
+    Root<ReferenceLink> references = cq.from(ReferenceLink.class);
+
+    // @formatter:off
+    cq.select(cb.construct(JoinReferenceLink.class,
+        link.get(ID),
+        link.get(TYPE).get(ID),
+        link.get(FOLIO_REFERENCE),
+        link.get(EXTERNAL_REFERENCE),
+        references.get(ID),
+        references.get(TYPE).get(ID),
+        references.get(FOLIO_REFERENCE),
+        references.get(EXTERNAL_REFERENCE)));
+
+    cq.where(
+      cb.and(cb.equal(link.get(ID), references.get(FOLIO_REFERENCE)),
+      cb.equal(link.get(TYPE).get(ID), typeId),
+      cb.equal(references.get(TYPE).get(ID), joinTypeId))
+    );
+    // @formatter:on
+
     cq.orderBy(cb.asc(link.get(EXTERNAL_REFERENCE).as(String.class)));
     return entityManager.createQuery(cq).getResultStream();
   }
