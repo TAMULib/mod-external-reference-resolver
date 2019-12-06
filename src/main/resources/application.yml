@@ -56,7 +56,7 @@ spring:
         dialect: org.folio.rest.dialect.CustomH2Dialect
         # dialect: org.folio.rest.dialect.CustomPostgreSQLDialect
         jdbc:
-          batch_size: 100
+          batch_size: 1000
           lob.non_contextual_creation: true
 
     generate-ddl: false
