@@ -35,7 +35,7 @@ public class BatchReferenceLinkController {
 
   @PostMapping
   @Transactional
-  public List<ReferenceLink> batchCreate(@RequestBody List<ReferenceLink> referenceLinks) throws IOException {
+  public String batchCreate(@RequestBody List<ReferenceLink> referenceLinks) throws IOException {
     long startTime = System.nanoTime();
     int i = 0;
     for (ReferenceLink referenceLink : referenceLinks) {
@@ -50,7 +50,7 @@ public class BatchReferenceLinkController {
     long stopTime = System.nanoTime();
     double duration = (stopTime - startTime) / (double) 1000000;
     logger.info("Created {} ReferenceLinks in {} milliseconds", referenceLinks.size(), duration);
-    return referenceLinks;
+    return "SUCCESS";
   }
 
 }
