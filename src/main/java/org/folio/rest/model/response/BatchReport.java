@@ -26,8 +26,4 @@ public class BatchReport {
     failures.add(Failure.of(payload, reason));
   }
 
-  public static BatchReport of(long total) {
-    return new BatchReport(total);
-  }
-
 }

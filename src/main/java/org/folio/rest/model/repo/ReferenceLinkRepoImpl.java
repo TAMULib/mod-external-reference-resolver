@@ -90,7 +90,7 @@ public class ReferenceLinkRepoImpl implements ReferenceLinkRepoCustom {
         references.get(EXTERNAL_REFERENCE)));
 
     cq.where(
-      cb.and(cb.equal(link.get(ID), references.get(FOLIO_REFERENCE)),
+      cb.and(cb.equal(link.get(ID), references.get(EXTERNAL_REFERENCE)),
       cb.equal(link.get(TYPE).get(ID), typeId),
       cb.equal(references.get(TYPE).get(ID), joinTypeId))
     );

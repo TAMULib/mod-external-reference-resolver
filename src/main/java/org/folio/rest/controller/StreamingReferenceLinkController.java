@@ -38,8 +38,7 @@ public class StreamingReferenceLinkController {
   public Flux<CollectorReferenceLink> streamAllByTypeIdCollectingTypeId(@PathVariable String typeId,
       @PathVariable String collectTypeId) throws IOException {
     logger.info("Streaming all ExternalReference by type id {} collect type id {}", typeId, collectTypeId);
-    return Flux.fromStream(
-        referenceLinkRepo.streamAllByTypeIdCollectingTypeIdOrderByExternalReferenceAsc(typeId, collectTypeId));
+    return Flux.fromStream(referenceLinkRepo.streamAllByTypeIdCollectingTypeIdOrderByExternalReferenceAsc(typeId, collectTypeId));
   }
 
   @GetMapping(value = "/type/{typeId}/join/{joinTypeId}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
