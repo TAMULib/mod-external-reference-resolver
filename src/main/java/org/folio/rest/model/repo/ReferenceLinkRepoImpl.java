@@ -41,7 +41,7 @@ public class ReferenceLinkRepoImpl implements ReferenceLinkRepoCustom {
 
   @Override
   public Stream<CollectorReferenceLink> streamAllByTypeIdCollectingTypeIdOrderByExternalReferenceAsc(String typeId,
-      String collectTypeId) {
+      String collectTypeId, String orderClass) throws ClassNotFoundException {
     CriteriaBuilder cb = entityManager.getCriteriaBuilder();
     CriteriaQuery<CollectorReferenceLink> cq = cb.createQuery(CollectorReferenceLink.class);
 
@@ -66,12 +66,14 @@ public class ReferenceLinkRepoImpl implements ReferenceLinkRepoCustom {
     // @formatter:on
 
     cq.groupBy(link.get(ID));
-    cq.orderBy(cb.asc(link.get(EXTERNAL_REFERENCE).as(String.class)));
+
+    Class<?> orderByClass = Class.forName(String.format(JAVA_LANG__CLASS_TEMPLATE, orderClass));
+    cq.orderBy(cb.asc(link.get(EXTERNAL_REFERENCE).as(orderByClass)));
     return entityManager.createQuery(cq).getResultStream();
   }
 
   public Stream<JoinReferenceLink> streamAllByTypeIdJoiningTypeIdOrderByExternalReferenceAsc(String typeId,
-      String joinTypeId) {
+      String joinTypeId, String orderClass) throws ClassNotFoundException {
     CriteriaBuilder cb = entityManager.getCriteriaBuilder();
     CriteriaQuery<JoinReferenceLink> cq = cb.createQuery(JoinReferenceLink.class);
 
@@ -84,16 +86,17 @@ public class ReferenceLinkRepoImpl implements ReferenceLinkRepoCustom {
         link.get(TYPE).get(ID),
         link.get(FOLIO_REFERENCE),
         link.get(EXTERNAL_REFERENCE),
-        references.get(FOLIO_REFERENCE)));
+        references.get(EXTERNAL_REFERENCE)));
 
     cq.where(
-      cb.and(cb.equal(link.get(ID), references.get(EXTERNAL_REFERENCE)),
+      cb.and(cb.equal(link.get(ID), references.get(FOLIO_REFERENCE)),
       cb.equal(link.get(TYPE).get(ID), typeId),
       cb.equal(references.get(TYPE).get(ID), joinTypeId))
     );
     // @formatter:on
 
-    cq.orderBy(cb.asc(link.get(EXTERNAL_REFERENCE).as(String.class)));
+    Class<?> orderByClass = Class.forName(String.format(JAVA_LANG__CLASS_TEMPLATE, orderClass));
+    cq.orderBy(cb.asc(link.get(EXTERNAL_REFERENCE).as(orderByClass)));
     return entityManager.createQuery(cq).getResultStream();
   }
 
