@@ -4,9 +4,9 @@ public class JoinReferenceLink extends BaseReferenceLink {
 
   private final String reference;
 
-  public JoinReferenceLink(String id, String typeId, String folioReference, String externalReference,
+  public JoinReferenceLink(String id, String typeId, String typeName, String folioReference, String externalReference,
       String reference) {
-    super(id, typeId, folioReference, externalReference);
+    super(id, typeId, typeName, folioReference, externalReference);
     this.reference = reference;
   }
 

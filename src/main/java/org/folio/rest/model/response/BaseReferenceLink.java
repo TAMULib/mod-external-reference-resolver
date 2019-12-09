@@ -10,9 +10,12 @@ public class BaseReferenceLink {
 
   private final String typeId;
 
-  public BaseReferenceLink(String id, String typeId, String folioReference, String externalReference) {
+  private final String typeName;
+
+  public BaseReferenceLink(String id, String typeId, String typeName, String folioReference, String externalReference) {
     this.id = id;
     this.typeId = typeId;
+    this.typeName = typeName;
     this.folioReference = folioReference;
     this.externalReference = externalReference;
   }
@@ -31,6 +34,10 @@ public class BaseReferenceLink {
 
   public String getTypeId() {
     return typeId;
+  }
+
+  public String getTypeName() {
+    return typeName;
   }
 
 }

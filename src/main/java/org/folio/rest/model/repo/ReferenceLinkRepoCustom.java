@@ -12,9 +12,9 @@ public interface ReferenceLinkRepoCustom {
       throws ClassNotFoundException;
 
   public Stream<CollectorReferenceLink> streamAllByTypeIdCollectingTypeIdOrderByExternalReferenceAsc(String typeId,
-      String collectTypeId);
+      String collectTypeId, String orderClass) throws ClassNotFoundException;
 
   public Stream<JoinReferenceLink> streamAllByTypeIdJoiningTypeIdOrderByExternalReferenceAsc(String typeId,
-      String joinTypeId);
+      String joinTypeId, String orderClass) throws ClassNotFoundException;
 
 }

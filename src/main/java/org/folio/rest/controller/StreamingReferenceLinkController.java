@@ -36,16 +36,18 @@ public class StreamingReferenceLinkController {
 
   @GetMapping(value = "/type/{typeId}/collect/{collectTypeId}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
   public Flux<CollectorReferenceLink> streamAllByTypeIdCollectingTypeId(@PathVariable String typeId,
-      @PathVariable String collectTypeId) throws IOException {
+      @PathVariable String collectTypeId, @RequestParam(defaultValue = "Integer") String orderClass)
+      throws IOException, ClassNotFoundException {
     logger.info("Streaming all ExternalReference by type id {} collect type id {}", typeId, collectTypeId);
-    return Flux.fromStream(referenceLinkRepo.streamAllByTypeIdCollectingTypeIdOrderByExternalReferenceAsc(typeId, collectTypeId));
+    return Flux.fromStream(referenceLinkRepo.streamAllByTypeIdCollectingTypeIdOrderByExternalReferenceAsc(typeId, collectTypeId, orderClass));
   }
 
   @GetMapping(value = "/type/{typeId}/join/{joinTypeId}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
   public Flux<JoinReferenceLink> streamAllByTypeIdJoiningTypeId(@PathVariable String typeId,
-      @PathVariable String joinTypeId) throws IOException {
+      @PathVariable String joinTypeId, @RequestParam(defaultValue = "Integer") String orderClass)
+      throws IOException, ClassNotFoundException {
     logger.info("Streaming all ExternalReference by type id {} join type id {}", typeId, joinTypeId);
-    return Flux.fromStream(referenceLinkRepo.streamAllByTypeIdJoiningTypeIdOrderByExternalReferenceAsc(typeId, joinTypeId));
+    return Flux.fromStream( referenceLinkRepo.streamAllByTypeIdJoiningTypeIdOrderByExternalReferenceAsc(typeId, joinTypeId, orderClass));
   }
 
 }
