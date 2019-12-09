@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.folio.rest.model.ReferenceLink;
 import org.folio.rest.model.repo.ReferenceLinkRepo;
 import org.folio.rest.model.response.CollectorReferenceLink;
+import org.folio.rest.model.response.JoinReferenceLink;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,14 @@ public class StreamingReferenceLinkController {
   public Flux<CollectorReferenceLink> streamAllByTypeIdCollectingTypeId(@PathVariable String typeId,
       @PathVariable String collectTypeId) throws IOException {
     logger.info("Streaming all ExternalReference by type id {} collect type id {}", typeId, collectTypeId);
-    return Flux.fromStream(
-        referenceLinkRepo.streamAllByTypeIdCollectingTypeIdOrderByExternalReferenceAsc(typeId, collectTypeId));
+    return Flux.fromStream(referenceLinkRepo.streamAllByTypeIdCollectingTypeIdOrderByExternalReferenceAsc(typeId, collectTypeId));
+  }
+
+  @GetMapping(value = "/type/{typeId}/join/{joinTypeId}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+  public Flux<JoinReferenceLink> streamAllByTypeIdJoiningTypeId(@PathVariable String typeId,
+      @PathVariable String joinTypeId) throws IOException {
+    logger.info("Streaming all ExternalReference by type id {} join type id {}", typeId, joinTypeId);
+    return Flux.fromStream(referenceLinkRepo.streamAllByTypeIdJoiningTypeIdOrderByExternalReferenceAsc(typeId, joinTypeId));
   }
 
 }

@@ -4,6 +4,7 @@ import java.util.stream.Stream;
 
 import org.folio.rest.model.ReferenceLink;
 import org.folio.rest.model.response.CollectorReferenceLink;
+import org.folio.rest.model.response.JoinReferenceLink;
 
 public interface ReferenceLinkRepoCustom {
 
@@ -12,5 +13,8 @@ public interface ReferenceLinkRepoCustom {
 
   public Stream<CollectorReferenceLink> streamAllByTypeIdCollectingTypeIdOrderByExternalReferenceAsc(String typeId,
       String collectTypeId);
+
+  public Stream<JoinReferenceLink> streamAllByTypeIdJoiningTypeIdOrderByExternalReferenceAsc(String typeId,
+      String joinTypeId);
 
 }

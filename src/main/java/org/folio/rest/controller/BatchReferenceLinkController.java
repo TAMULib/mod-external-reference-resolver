@@ -40,7 +40,7 @@ public class BatchReferenceLinkController {
     long startTime = System.nanoTime();
     int i = 0;
     for (ReferenceLink referenceLink : referenceLinks) {
-      referenceLink = referenceLinkRepo.save(referenceLink);
+      referenceLinkRepo.save(referenceLink);
       if (++i == batchSize) {
         i = 0;
         entityManager.flush();
@@ -51,7 +51,7 @@ public class BatchReferenceLinkController {
     long stopTime = System.nanoTime();
     double duration = (stopTime - startTime) / (double) 1000000;
     logger.info("Created {} ReferenceLinks in {} milliseconds", referenceLinks.size(), duration);
-    return BatchReport.of(referenceLinks.size());
+    return new BatchReport(referenceLinks.size());
   }
 
 }
