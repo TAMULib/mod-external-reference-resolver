@@ -16,6 +16,7 @@ import org.folio.rest.model.response.JoinReferenceLink;
 public class ReferenceLinkRepoImpl implements ReferenceLinkRepoCustom {
 
   private static final String ID = "id";
+  private static final String NAME = "name";
   private static final String TYPE = "type";
   private static final String FOLIO_REFERENCE = "folioReference";
   private static final String EXTERNAL_REFERENCE = "externalReference";
@@ -54,6 +55,7 @@ public class ReferenceLinkRepoImpl implements ReferenceLinkRepoCustom {
     cq.select(cb.construct(CollectorReferenceLink.class,
         link.get(ID),
         link.get(TYPE).get(ID),
+        link.get(TYPE).get(NAME),
         link.get(FOLIO_REFERENCE),
         link.get(EXTERNAL_REFERENCE),
         stringAgg));
@@ -84,9 +86,10 @@ public class ReferenceLinkRepoImpl implements ReferenceLinkRepoCustom {
     cq.select(cb.construct(JoinReferenceLink.class,
         link.get(ID),
         link.get(TYPE).get(ID),
+        link.get(TYPE).get(NAME),
         link.get(FOLIO_REFERENCE),
         link.get(EXTERNAL_REFERENCE),
-        reference));
+        reference.get(EXTERNAL_REFERENCE)));
 
     cq.where(
       cb.and(cb.equal(link.get(ID), reference.get(FOLIO_REFERENCE)),
