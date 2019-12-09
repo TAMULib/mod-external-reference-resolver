@@ -15,7 +15,7 @@ import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.usertype.UserType;
 
 public class StringArrayUserType implements UserType {
-  
+
   private static final String VARCHAR = "VARCHAR";
 
   public static final StringArrayUserType INSTANCE = new StringArrayUserType();
@@ -72,7 +72,6 @@ public class StringArrayUserType implements UserType {
     if (array == null) {
       return null;
     }
-    // String[] javaArray = (String[]) array.getArray();
     String[] strings = ArrayUtils.toStringArray((Object[]) array.getArray());
     return ArrayUtils.toPrimitive(strings);
   }

@@ -33,8 +33,4 @@ public class BaseReferenceLink {
     return typeId;
   }
 
-  public static BaseReferenceLink of(String id, String typeId, String folioReference, String externalReference) {
-    return new BaseReferenceLink(id, typeId, folioReference, externalReference);
-  }
-
 }
