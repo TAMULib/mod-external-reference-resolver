@@ -78,7 +78,7 @@ public class ReferenceLinkRepoImpl implements ReferenceLinkRepoCustom {
     CriteriaQuery<JoinReferenceLink> cq = cb.createQuery(JoinReferenceLink.class);
 
     Root<ReferenceLink> link = cq.from(ReferenceLink.class);
-    Root<ReferenceLink> references = cq.from(ReferenceLink.class);
+    Root<ReferenceLink> reference = cq.from(ReferenceLink.class);
 
     // @formatter:off
     cq.select(cb.construct(JoinReferenceLink.class,
@@ -86,12 +86,12 @@ public class ReferenceLinkRepoImpl implements ReferenceLinkRepoCustom {
         link.get(TYPE).get(ID),
         link.get(FOLIO_REFERENCE),
         link.get(EXTERNAL_REFERENCE),
-        references.get(EXTERNAL_REFERENCE)));
+        reference));
 
     cq.where(
-      cb.and(cb.equal(link.get(ID), references.get(FOLIO_REFERENCE)),
+      cb.and(cb.equal(link.get(ID), reference.get(FOLIO_REFERENCE)),
       cb.equal(link.get(TYPE).get(ID), typeId),
-      cb.equal(references.get(TYPE).get(ID), joinTypeId))
+      cb.equal(reference.get(TYPE).get(ID), joinTypeId))
     );
     // @formatter:on
 
