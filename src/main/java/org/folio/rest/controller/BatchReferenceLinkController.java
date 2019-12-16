@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 
 import org.folio.rest.model.ReferenceLink;
 import org.folio.rest.model.repo.ReferenceLinkRepo;
+import org.folio.rest.model.response.BatchReport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +36,11 @@ public class BatchReferenceLinkController {
 
   @PostMapping
   @Transactional
-  public List<ReferenceLink> batchCreate(@RequestBody List<ReferenceLink> referenceLinks) throws IOException {
+  public BatchReport batchCreate(@RequestBody List<ReferenceLink> referenceLinks) throws IOException {
     long startTime = System.nanoTime();
     int i = 0;
     for (ReferenceLink referenceLink : referenceLinks) {
-      referenceLink = referenceLinkRepo.save(referenceLink);
+      referenceLinkRepo.save(referenceLink);
       if (++i == batchSize) {
         i = 0;
         entityManager.flush();
@@ -50,7 +51,7 @@ public class BatchReferenceLinkController {
     long stopTime = System.nanoTime();
     double duration = (stopTime - startTime) / (double) 1000000;
     logger.info("Created {} ReferenceLinks in {} milliseconds", referenceLinks.size(), duration);
-    return referenceLinks;
+    return new BatchReport(referenceLinks.size());
   }
 
 }

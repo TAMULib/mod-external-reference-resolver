@@ -30,6 +30,7 @@ ENV SPRING_DATASOURCE_PASSWORD='folio'
 ENV SPRING_H2_CONSOLE_ENABLED='true'
 ENV SPRING_JPA_DATABASE_PLATFORM='org.hibernate.dialect.H2Dialect'
 ENV SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT='org.folio.rest.dialect.CustomH2Dialect'
+ENV SPRING_JPA_PROPERTIES_HIBERNATE_JDBC_BATCH_SIZE='1000'
 ENV TENANT_DEFAULT_TENANT='tern'
 ENV TENANT_INITIALIZE_DEFAULT_TENANT='false'
 
@@ -42,5 +43,5 @@ CMD java -jar ./mod-external-reference-resolver.jar \
   --spring.datasource.url=${SPRING_DATASOURCE_URL} --spring.datasource.driverClassName=${SPRING_DATASOURCE_DRIVERCLASSNAME} \
   --spring.datasource.username=${SPRING_DATASOURCE_USERNAME} --spring.datasource.password=${SPRING_DATASOURCE_PASSWORD} \
   --spring.h2.console.enabled=${SPRING_H2_CONSOLE_ENABLED} --spring.jpa.database-platform=${SPRING_JPA_DATABASE_PLATFORM} \
-  --spring.jpa.properties.hibernate.dialect=${SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT} \
+  --spring.jpa.properties.hibernate.dialect=${SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT} --spring.jpa.properties.hibernate.jdbc.batch_size=${SPRING_JPA_PROPERTIES_HIBERNATE_JDBC_BATCH_SIZE} \
   --tenant.default-tenant=${TENANT_DEFAULT_TENANT} --tenant.initialize-default-tenant=${TENANT_INITIALIZE_DEFAULT_TENANT}
