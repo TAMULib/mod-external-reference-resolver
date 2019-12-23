@@ -22,7 +22,7 @@ spring:
     returnBodyOnUpdate: true
   datasource:
     hikari:
-      connectionTimeout: 3600000
+      connectionTimeout: 172800000
       idleTimeout: 3600000
       maximumPoolSize: 100
     platform: h2
