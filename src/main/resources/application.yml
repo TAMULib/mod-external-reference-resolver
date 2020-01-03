@@ -15,7 +15,6 @@ server:
     accept-count: 1000
     max-connections: 100000
     max-threads: 400
-    
 
 spring:
   data.rest:
@@ -23,7 +22,8 @@ spring:
     returnBodyOnUpdate: true
   datasource:
     hikari:
-      connectionTimeout: 3600000
+      connectionTimeout: 172800000
+      idleTimeout: 3600000
       maximumPoolSize: 100
     platform: h2
     url: jdbc:h2:./target/mod-external-reference-resolver;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
