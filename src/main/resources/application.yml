@@ -76,3 +76,7 @@ tenant:
   initialize-default-tenant: true
   domain-packages:
   schema-scripts:
+  
+data-extractor:
+  batch:
+    partition-size: 10
