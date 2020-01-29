@@ -1,6 +1,5 @@
 package org.folio.rest.model.repo;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +18,7 @@ public interface ReferenceLinkRepo extends JpaRepository<ReferenceLink, String>,
       @Param("externalReference") String externalReference);
 
   public List<ReferenceLink> findAllByTypeNameAndExternalReferenceIn(@Param("typeName") String typeName,
-      @Param("externalReferences") Collection<String> externalReferences);
+      @Param("externalReferences") List<String> externalReferences);
 
   public List<ReferenceLink> findAllByTypeId(@Param("typeId") String typeId);
 

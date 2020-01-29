@@ -27,14 +27,14 @@ public class StreamingReferenceLinkController {
   @Autowired
   private ReferenceLinkRepo referenceLinkRepo;
 
-  @GetMapping(value = "/type/{typeId}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+  @GetMapping(value = "/{typeId}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
   public Flux<ReferenceLink> streamAllByTypeId(@PathVariable String typeId,
       @RequestParam(defaultValue = "Integer") String orderClass) throws IOException, ClassNotFoundException {
     logger.info("Streaming all ExternalReference by type id {} order by class {}", typeId, orderClass);
     return Flux.fromStream(referenceLinkRepo.streamAllByTypeIdOrderByExternalReferenceAsc(typeId, orderClass));
   }
 
-  @GetMapping(value = "/type/{typeId}/collect/{collectTypeId}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+  @GetMapping(value = "/{typeId}/collect/{collectTypeId}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
   public Flux<CollectorReferenceLink> streamAllByTypeIdCollectingTypeId(@PathVariable String typeId,
       @PathVariable String collectTypeId, @RequestParam(defaultValue = "Integer") String orderClass)
       throws IOException, ClassNotFoundException {
@@ -43,7 +43,7 @@ public class StreamingReferenceLinkController {
         collectTypeId, orderClass));
   }
 
-  @GetMapping(value = "/type/{typeId}/join/{joinTypeId}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+  @GetMapping(value = "/{typeId}/join/{joinTypeId}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
   public Flux<JoinReferenceLink> streamAllByTypeIdJoiningTypeId(@PathVariable String typeId,
       @PathVariable String joinTypeId, @RequestParam(defaultValue = "Integer") String orderClass)
       throws IOException, ClassNotFoundException {
