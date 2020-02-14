@@ -2,9 +2,8 @@ package org.folio.rest.controller;
 
 import java.io.IOException;
 import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.folio.rest.model.ReferenceLink;
 import org.folio.rest.model.repo.ReferenceLinkRepo;
@@ -28,30 +27,31 @@ public class BatchReferenceLinkController {
   @Autowired
   private ReferenceLinkRepo referenceLinkRepo;
 
-  @PersistenceContext
-  private EntityManager entityManager;
-
-  @Value("${spring.jpa.properties.hibernate.jdbc.batch_size:50}")
-  public int batchSize;
+  @Value("${data-extractor.batch.partition-size:10}")
+  public int partitionSize;
 
   @PostMapping
   @Transactional
   public BatchReport batchCreate(@RequestBody List<ReferenceLink> referenceLinks) throws IOException {
     long startTime = System.nanoTime();
-    int i = 0;
-    for (ReferenceLink referenceLink : referenceLinks) {
-      referenceLinkRepo.save(referenceLink);
-      if (++i == batchSize) {
-        i = 0;
-        entityManager.flush();
-        entityManager.clear();
-      }
-    }
-    entityManager.flush();
+    batches(referenceLinks, partitionSize).parallel().forEach(batch -> referenceLinkRepo.saveAll(batch));
     long stopTime = System.nanoTime();
     double duration = (stopTime - startTime) / (double) 1000000;
     logger.info("Created {} ReferenceLinks in {} milliseconds", referenceLinks.size(), duration);
     return new BatchReport(referenceLinks.size());
+  }
+
+  public static <T> Stream<List<T>> batches(List<T> source, int length) {
+    if (length <= 0) {
+      throw new IllegalArgumentException("length = " + length);
+    }
+    int size = source.size();
+    if (size <= 0) {
+      return Stream.empty();
+    }
+    int fullChunks = (size - 1) / length;
+    return IntStream.range(0, fullChunks + 1)
+        .mapToObj(n -> source.subList(n * length, n == fullChunks ? size : (n + 1) * length));
   }
 
 }

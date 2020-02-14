@@ -14,8 +14,8 @@ public class ReferenceLinkExistsException extends RuntimeException {
   }
 
   public ReferenceLinkExistsException(String message, ReferenceLink referenceLink) {
-      super(message);
-      this.referenceLink = referenceLink;
+    super(message);
+    this.referenceLink = referenceLink;
   }
 
   public ReferenceLink getReferenceLink() {
