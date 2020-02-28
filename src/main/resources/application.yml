@@ -31,7 +31,7 @@ spring:
     # platform: postgres
     # driverClassName: org.postgresql.Driver
     # url: jdbc:postgresql://localhost:5432/mod-external-reference-resolver
-    
+
     username: folio
     password: folio
   devtools:
@@ -40,15 +40,15 @@ spring:
       enabled: false
       exclude: target
   h2:
-    console: 
+    console:
       enabled: true
       path: /h2console
       settings:
         web-allow-others: true
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    # database-platform: org.hibernate.dialect.PostgreSQL82Dialect
-    
+    database-platform: org.folio.rest.dialect.CustomH2Dialect
+    # database-platform: org.folio.rest.dialect.CustomPostgreSQLDialect
+
     properties:
       hibernate:
         order_inserts: true
@@ -76,7 +76,7 @@ tenant:
   initialize-default-tenant: true
   domain-packages:
   schema-scripts:
-  
+
 data-extractor:
   batch:
     partition-size: 10

@@ -23,11 +23,11 @@ spring:
     username: folio
     password: folio
   h2:
-    console: 
+    console:
       enabled: true
       path: /h2console
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.folio.rest.dialect.CustomH2Dialect
     properties.hibernate.jdbc.lob.non_contextual_creation: true
     generate-ddl: false
     hibernate.ddl-auto: none
