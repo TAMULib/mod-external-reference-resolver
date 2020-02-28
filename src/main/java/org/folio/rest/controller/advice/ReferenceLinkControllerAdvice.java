@@ -1,4 +1,4 @@
-package org.folio.rest.advice;
+package org.folio.rest.controller.advice;
 
 import org.folio.rest.exception.ReferenceLinkExistsException;
 import org.folio.rest.model.ReferenceLink;

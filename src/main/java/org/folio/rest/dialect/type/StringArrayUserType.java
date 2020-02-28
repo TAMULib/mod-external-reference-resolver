@@ -1,4 +1,4 @@
-package org.folio.rest.type;
+package org.folio.rest.dialect.type;
 
 import static java.sql.Types.ARRAY;
 

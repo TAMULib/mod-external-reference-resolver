@@ -1,6 +1,6 @@
 package org.folio.rest.dialect;
 
-import org.folio.rest.type.StringArrayUserType;
+import org.folio.rest.dialect.type.StringArrayUserType;
 import org.hibernate.dialect.H2Dialect;
 import org.hibernate.dialect.function.SQLFunctionTemplate;
 import org.hibernate.type.CustomType;

@@ -19,7 +19,6 @@ public class ReferenceLinkEventHandler {
   public void handleReferenceLinkBeforeCreate(ReferenceLink referenceLink) {
     Optional<ReferenceLink> existingReferenceLink = referenceLinkRepo.findByTypeIdAndExternalReferenceAndFolioReference(
         referenceLink.getType().getId(), referenceLink.getExternalReference(), referenceLink.getFolioReference());
-
     if (existingReferenceLink.isPresent()) {
       throw new ExternalReferenceLinkExistsException(existingReferenceLink.get());
     }
